@@ -29,7 +29,7 @@ describe('Test method getRecommendations', () => {
     done();
 
     /*
-    client.getRecommendations({likes: likes, dislikes: []})
+    client.getPersonalRecommendations({likes: likes, dislikes: []})
       .then((response) => {
         expect(response.result.length).to.equal(100);
         expect(response.result[0][0]).to.equal('870970-basis:27175953');
@@ -41,7 +41,7 @@ describe('Test method getRecommendations', () => {
     let endpoint = 'http://xp-p02.dbc.dk:8017/recommend-ranked';
     let client = Recommendations(endpoint);
     const params = {likes: {}, dislikes: []};
-    client.getRecommendations(params)
+    client.getPersonalRecommendations(params)
       .catch((response) => {
         expect(response.statusMessage).to.equal('Parameters \'like\' and \'dislike\' should be arrays. I.e. { likes: [], dislikes: [] }');
         done();
@@ -52,7 +52,7 @@ describe('Test method getRecommendations', () => {
     let endpoint = 'http://xp-p02.dbc.dk:8017/recommend-ranked';
     let client = Recommendations(endpoint);
     const params = {likes: [], dislikes: {}};
-    client.getRecommendations(params)
+    client.getPersonalRecommendations(params)
       .catch((response) => {
         expect(response.statusMessage).to.equal('Parameters \'like\' and \'dislike\' should be arrays. I.e. { likes: [], dislikes: [] }');
         done();
@@ -63,7 +63,7 @@ describe('Test method getRecommendations', () => {
     let endpoint = 'http://xp-p02.dbc.dk:8017/recommend-ranked';
     let client = Recommendations(endpoint);
     const params = 'this should be an object';
-    client.getRecommendations(params)
+    client.getPersonalRecommendations(params)
       .catch((response) => {
         expect(response.statusMessage).to.equal('Parameters should be an objet that contains both a like and a dislike parameter. I.e. { likes: [], dislikes: [] }');
         done();
