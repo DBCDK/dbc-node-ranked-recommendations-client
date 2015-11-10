@@ -20,7 +20,7 @@ var _lodash = require('lodash');
  * @returns {Promise}
  */
 function getPersonalRecommendations(endpoint, params) {
-  var parameters = JSON.stringify({ like: params.like, maxresults: 100, filter: ['phrase.type:bog'] });
+  var parameters = JSON.stringify({ like: params.like, maxresults: 100 });
 
   return new Promise(function (resolve, reject) {
     _request2['default'].post({
