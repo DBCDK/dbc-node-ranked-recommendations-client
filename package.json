@@ -1,6 +1,6 @@
 {
   "name": "dbc-node-ranked-recommendations-client",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Client for the DBC Ranked Recommendation service",
   "main": "dist/RankedRecommendation.client.js",
   "scripts": {
