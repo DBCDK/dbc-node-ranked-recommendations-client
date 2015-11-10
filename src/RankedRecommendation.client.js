@@ -10,7 +10,7 @@ import {curry} from 'lodash';
  * @returns {Promise}
  */
 function getPersonalRecommendations(endpoint, params) {
-  var parameters = JSON.stringify({like: params.like, maxresults:100, filter: ['phrase.type:bog']});
+  var parameters = JSON.stringify({like: params.like, maxresults: 100, filter: ['phrase.type:bog']});
 
   return new Promise((resolve, reject) => {
     request.post({
