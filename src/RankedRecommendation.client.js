@@ -1,9 +1,7 @@
 'use strict';
 
-import {Promise} from 'es6-promise';
-import {Client} from 'node-rest-client';
-import {isPlainObject, isUndefined, isArray} from 'lodash';
-const client = new Client();
+import request from 'request';
+import {curry} from 'lodash';
 
 /**
  * Method for getting recommendations
@@ -11,41 +9,23 @@ const client = new Client();
  * @param {Object} params
  * @returns {Promise}
  */
-function getPersonalRecommendations(params) {
-  if (!isPlainObject(params) || isUndefined(params.likes) || isUndefined(params.dislikes)) {
-    return Promise.reject({statusMessage: 'Parameters should be an objet that contains both a like and a dislike parameter. I.e. { likes: [], dislikes: [] }'});
-  }
+function getPersonalRecommendations(endpoint, params) {
+  var parameters = JSON.stringify({like: params.like, maxresults:100, filter: ['phrase.type:bog']});
 
-  if (!isArray(params.likes) || !isArray(params.dislikes)) {
-    return Promise.reject({statusMessage: 'Parameters \'like\' and \'dislike\' should be arrays. I.e. { likes: [], dislikes: [] }'});
-  }
-
-  var parameters = {
-    data: JSON.stringify({like: params.likes, dislike: params.dislikes})
-  };
   return new Promise((resolve, reject) => {
-    client.methods.getRecommendations(parameters, (data, response) => {
-      if (response.statusCode === 200) {
-        resolve(JSON.parse(data));
+    request.post({
+      url: endpoint,
+      body: parameters
+    }, (err, response) => {
+      if (err) {
+        return reject(err);
       }
-      else {
-        reject(response);
+      if (response.statusCode !== 200) {
+        return reject(response);
       }
+      return resolve(JSON.parse(response.body));
     });
   });
-}
-
-/**
- * Wrapper function for all the client methods
- *
- * @param endpoint
- * @returns {{getPersonalRecommendations: getPersonalRecommendations}}
- */
-function registerMethods(endpoint) {
-  client.registerMethod('getPersonalRecommendations', endpoint, 'POST');
-  return {
-    getPersonalRecommendations: getPersonalRecommendations
-  };
 }
 
 /**
@@ -57,5 +37,7 @@ function registerMethods(endpoint) {
  * @constructor
  */
 export default function Recommendations(endpoint) {
-  return registerMethods(endpoint);
+  return {
+    getPersonalRecommendations: curry(getPersonalRecommendations)(endpoint)
+  };
 }

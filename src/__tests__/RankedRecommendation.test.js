@@ -5,12 +5,12 @@ import {expect} from 'chai'; // eslint-disable-line
 
 describe('Test method getRecommendations', () => {
 
-  it('gives results with a working client', (done) => {
+  it('Dummy test', (done) => {
     let endpoint = 'http://xp-p02.dbc.dk:8017/recommend-ranked';
     let client = Recommendations(endpoint); // eslint-disable-line
 
     const likes = [ // eslint-disable-line
-      '870970-basis:44582937',
+      '870970-basis:29626081', // The recommendations
       '870970-basis:42307963',
       '870970-basis:26488303',
       '870970-basis:29008736',
@@ -29,44 +29,15 @@ describe('Test method getRecommendations', () => {
     done();
 
     /*
-    client.getPersonalRecommendations({likes: likes, dislikes: []})
+    client.getPersonalRecommendations({like: likes})
       .then((response) => {
         expect(response.result.length).to.equal(100);
-        expect(response.result[0][0]).to.equal('870970-basis:27175953');
+        expect(response.result[0][0]).to.equal('870970-basis:28751176');
+        done();
+      })
+      .catch((err) => {
+        done(err);
       });
     */
-  });
-
-  it('catch wrong parameters - likes is not an array', (done) => {
-    let endpoint = 'http://xp-p02.dbc.dk:8017/recommend-ranked';
-    let client = Recommendations(endpoint);
-    const params = {likes: {}, dislikes: []};
-    client.getPersonalRecommendations(params)
-      .catch((response) => {
-        expect(response.statusMessage).to.equal('Parameters \'like\' and \'dislike\' should be arrays. I.e. { likes: [], dislikes: [] }');
-        done();
-      });
-  });
-
-  it('catch wrong parameters - dislikes is not an array', (done) => {
-    let endpoint = 'http://xp-p02.dbc.dk:8017/recommend-ranked';
-    let client = Recommendations(endpoint);
-    const params = {likes: [], dislikes: {}};
-    client.getPersonalRecommendations(params)
-      .catch((response) => {
-        expect(response.statusMessage).to.equal('Parameters \'like\' and \'dislike\' should be arrays. I.e. { likes: [], dislikes: [] }');
-        done();
-      });
-  });
-
-  it('catch wrong parameters', (done) => {
-    let endpoint = 'http://xp-p02.dbc.dk:8017/recommend-ranked';
-    let client = Recommendations(endpoint);
-    const params = 'this should be an object';
-    client.getPersonalRecommendations(params)
-      .catch((response) => {
-        expect(response.statusMessage).to.equal('Parameters should be an objet that contains both a like and a dislike parameter. I.e. { likes: [], dislikes: [] }');
-        done();
-      });
   });
 });
