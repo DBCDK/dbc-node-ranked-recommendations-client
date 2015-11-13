@@ -7,7 +7,7 @@ describe('Test method getRecommendations', () => {
 
   it('Dummy test', (done) => {
     let endpoint = 'http://xp-p02.dbc.dk:8017/recommend-ranked';
-    let client = Recommendations(endpoint); // eslint-disable-line
+    let client = Recommendations(endpoint, ['rec.collectionIdentifier:775100-katalog']); // eslint-disable-line
 
     const likes = [ // eslint-disable-line
       '870970-basis:29626081', // The recommendations
@@ -31,6 +31,7 @@ describe('Test method getRecommendations', () => {
     /*
     client.getPersonalRecommendations({like: likes})
       .then((response) => {
+        console.log(response); // eslint-disable-line
         expect(response.result.length).to.equal(100);
         expect(response.result[0][0]).to.equal('870970-basis:28751176');
         done();
@@ -38,6 +39,6 @@ describe('Test method getRecommendations', () => {
       .catch((err) => {
         done(err);
       });
-    */
+    /**/
   });
 });

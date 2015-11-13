@@ -9,8 +9,8 @@ import {curry} from 'lodash';
  * @param {Object} params
  * @returns {Promise}
  */
-function getPersonalRecommendations(endpoint, params) {
-  var parameters = JSON.stringify({like: params.like, maxresults: 100});
+function getPersonalRecommendations(endpoint, filters, params) {
+  var parameters = JSON.stringify({like: params.like, filter: filters, maxresults: 100});
 
   return new Promise((resolve, reject) => {
     request.post({
@@ -36,8 +36,9 @@ function getPersonalRecommendations(endpoint, params) {
  * @returns {{getSuggestions}}
  * @constructor
  */
-export default function Recommendations(endpoint) {
+export default function Recommendations(endpoint, filters) {
+  console.error(filters);
   return {
-    getPersonalRecommendations: curry(getPersonalRecommendations)(endpoint)
+    getPersonalRecommendations: curry(getPersonalRecommendations)(endpoint)(filters)
   };
 }
