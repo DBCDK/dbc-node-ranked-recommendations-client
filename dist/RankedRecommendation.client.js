@@ -19,8 +19,8 @@ var _lodash = require('lodash');
  * @param {Object} params
  * @returns {Promise}
  */
-function getPersonalRecommendations(endpoint, params) {
-  var parameters = JSON.stringify({ like: params.like, maxresults: 100 });
+function getPersonalRecommendations(endpoint, filters, params) {
+  var parameters = JSON.stringify({ like: params.like, filter: filters, maxresults: 100 });
 
   return new Promise(function (resolve, reject) {
     _request2['default'].post({
@@ -47,9 +47,10 @@ function getPersonalRecommendations(endpoint, params) {
  * @constructor
  */
 
-function Recommendations(endpoint) {
+function Recommendations(endpoint, filters) {
+  console.error(filters);
   return {
-    getPersonalRecommendations: (0, _lodash.curry)(getPersonalRecommendations)(endpoint)
+    getPersonalRecommendations: (0, _lodash.curry)(getPersonalRecommendations)(endpoint)(filters)
   };
 }
 
