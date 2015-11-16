@@ -37,7 +37,6 @@ function getPersonalRecommendations(endpoint, filters, params) {
  * @constructor
  */
 export default function Recommendations(endpoint, filters) {
-  console.error(filters);
   return {
     getPersonalRecommendations: curry(getPersonalRecommendations)(endpoint)(filters)
   };

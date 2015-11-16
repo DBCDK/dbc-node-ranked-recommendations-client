@@ -48,7 +48,6 @@ function getPersonalRecommendations(endpoint, filters, params) {
  */
 
 function Recommendations(endpoint, filters) {
-  console.error(filters);
   return {
     getPersonalRecommendations: (0, _lodash.curry)(getPersonalRecommendations)(endpoint)(filters)
   };
