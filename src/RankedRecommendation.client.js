@@ -36,8 +36,18 @@ function getPersonalRecommendations(endpoint, filters, params) {
  * @returns {{getSuggestions}}
  * @constructor
  */
-export default function Recommendations(endpoint, filters) {
+export default function Recommendations(config) {
+  if (!config) {
+    throw new Error('config is undefined');
+  }
+  if (!config.endpoint) {
+    throw new Error('An endpoint needs to be provided with config');
+  }
+
+  const filters = config.filters || null;
+
+
   return {
-    getPersonalRecommendations: curry(getPersonalRecommendations)(endpoint)(filters)
+    getPersonalRecommendations: curry(getPersonalRecommendations)(config.endpoint)(filters)
   };
 }
