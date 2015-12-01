@@ -47,9 +47,18 @@ function getPersonalRecommendations(endpoint, filters, params) {
  * @constructor
  */
 
-function Recommendations(endpoint, filters) {
+function Recommendations(config) {
+  if (!config) {
+    throw new Error('config is undefined');
+  }
+  if (!config.endpoint) {
+    throw new Error('An endpoint needs to be provided with config');
+  }
+
+  var filters = config.filters || null;
+
   return {
-    getPersonalRecommendations: (0, _lodash.curry)(getPersonalRecommendations)(endpoint)(filters)
+    getPersonalRecommendations: (0, _lodash.curry)(getPersonalRecommendations)(config.endpoint)(filters)
   };
 }
 

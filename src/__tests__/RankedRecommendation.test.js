@@ -4,10 +4,19 @@ import Recommendations from '../RankedRecommendation.client.js';
 import {expect} from 'chai'; // eslint-disable-line
 
 describe('Test method getRecommendations', () => {
+  it('throws error if config is not correct', () => {
+    expect(Recommendations).to.throw(Error);
+    expect(() => Recommendations({})).to.throw(Error);
+  });
+
+  it('returns methods on init', () => {
+    const recommendations = Recommendations({endpoint: 'test'});
+    expect(recommendations.getRecommendations).to.be.method; // eslint-disable-line no-unused-expressions
+  });
 
   it('Dummy test', (done) => {
     let endpoint = 'http://xp-p02.dbc.dk:8017/recommend-ranked';
-    let client = Recommendations(endpoint, ['rec.collectionIdentifier:775100-katalog']); // eslint-disable-line
+    let client = Recommendations({endpoint}, ['rec.collectionIdentifier:775100-katalog']); // eslint-disable-line
 
     const likes = [ // eslint-disable-line
       '870970-basis:29626081', // The recommendations
