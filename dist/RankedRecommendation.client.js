@@ -19,8 +19,8 @@ var _lodash = require('lodash');
  * @param {Object} params
  * @returns {Promise}
  */
-function getPersonalRecommendations(endpoint, filters, params) {
-  var parameters = JSON.stringify({ like: params.like, filter: filters, maxresults: 100 });
+function getPersonalRecommendations(endpoint, params) {
+  var parameters = JSON.stringify({ like: params.like, filters: params.filter || [], maxresults: 100 });
 
   return new Promise(function (resolve, reject) {
     _request2['default'].post({
@@ -55,10 +55,8 @@ function Recommendations(config) {
     throw new Error('An endpoint needs to be provided with config');
   }
 
-  var filters = config.filters || null;
-
   return {
-    getPersonalRecommendations: (0, _lodash.curry)(getPersonalRecommendations)(config.endpoint)(filters)
+    getPersonalRecommendations: (0, _lodash.curry)(getPersonalRecommendations)(config.endpoint)
   };
 }
 

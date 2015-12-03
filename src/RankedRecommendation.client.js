@@ -9,8 +9,8 @@ import {curry} from 'lodash';
  * @param {Object} params
  * @returns {Promise}
  */
-function getPersonalRecommendations(endpoint, filters, params) {
-  var parameters = JSON.stringify({like: params.like, filter: filters, maxresults: 100});
+function getPersonalRecommendations(endpoint, params) {
+  var parameters = JSON.stringify({like: params.like, filters: params.filter || [], maxresults: 100});
 
   return new Promise((resolve, reject) => {
     request.post({
@@ -44,10 +44,7 @@ export default function Recommendations(config) {
     throw new Error('An endpoint needs to be provided with config');
   }
 
-  const filters = config.filters || null;
-
-
   return {
-    getPersonalRecommendations: curry(getPersonalRecommendations)(config.endpoint)(filters)
+    getPersonalRecommendations: curry(getPersonalRecommendations)(config.endpoint)
   };
 }
