@@ -9,12 +9,12 @@ import {curry} from 'lodash';
  * @param {Object} params
  * @returns {Promise}
  */
-function getPersonalRecommendations(endpoint, params) {
-  var parameters = JSON.stringify({like: params.like, filters: params.filter || [], maxresults: 100});
+function getPersonalRecommendations(config, params) {
+  var parameters = JSON.stringify({profile: config.profile, like: params.like, filters: params.filter || [], maxresults: 100});
 
   return new Promise((resolve, reject) => {
     request.post({
-      url: endpoint,
+      url: config.endpoint,
       body: parameters
     }, (err, response) => {
       if (err) {
@@ -45,6 +45,6 @@ export default function Recommendations(config) {
   }
 
   return {
-    getPersonalRecommendations: curry(getPersonalRecommendations)(config.endpoint)
+    getPersonalRecommendations: curry(getPersonalRecommendations)(config)
   };
 }
